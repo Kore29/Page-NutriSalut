@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriSalut - Administració de Gestions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">NutriSalut</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inici</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chatbot.html">Chat AI</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link disabled" href="manageAdmin.html">Administració de gestions</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Administració de Preguntes</h2>
+        <div class="mb-4">
+            <input type="text" id="newQuestionText" class="form-control" placeholder="Escriu una nova pregunta">
+            <select id="inputType" class="form-select mt-2" onchange="toggleOptionsInput()">
+                <option value="button">Botó</option>
+                <option value="checkbox">Checkbox</option>
+                <option value="select">Select</option>
+            </select>
+            <div id="optionsContainer" class="mt-2 d-none">
+                <textarea id="inputOptions" class="form-control" placeholder="Introdueix les opcions separades per comes"></textarea>
+                <small class="text-muted">Escriu les opcions separades per comes.</small>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="addQuestion()">Crear Pregunta</button>
+        </div>
+
+        <h3>Llista de Preguntes</h3>
+        <div id="questionsContainer" class="mb-4"></div>
+
+        <h3>Eliminar Pregunta</h3>
+        <div class="mb-3">
+            <input type="text" id="deleteQuestionId" class="form-control" placeholder="Introdueix el ID">
+            <button class="btn btn-danger mt-2" onclick="deleteQuestion()">Eliminar</button>
+        </div>
+    </div>
+
+    <script>
+        // Almacenar preguntas
+        let questions = [];
+        let nextId = 1; // ID automático
+
+        // Mostrar campo para las opciones si se selecciona "Checkbox" o "Select"
+        function toggleOptionsInput() {
+            const inputType = document.getElementById("inputType").value;
+            const optionsContainer = document.getElementById("optionsContainer");
+            if (inputType === "select" || inputType === "checkbox") {
+                optionsContainer.classList.remove("d-none");
+            } else {
+                optionsContainer.classList.add("d-none");
+                document.getElementById("inputOptions").value = ""; // Limpiar opciones
+            }
+        }
+
+        // Función para agregar una nueva pregunta
+        function addQuestion() {
+            const text = document.getElementById("newQuestionText").value.trim();
+            const type = document.getElementById("inputType").value;
+            const options = document.getElementById("inputOptions").value.trim();
+
+            if (!text) {
+                alert("Per favor, escriu una pregunta.");
+                return;
+            }
+
+            if ((type === "select" || type === "checkbox") && !options) {
+                alert("Per favor, escriu les opcions per al tipus seleccionat.");
+                return;
+            }
+
+            // Crear pregunta con ID automático
+            const newQuestion = {
+                id: nextId++,
+                text,
+                type,
+                options: (type === "select" || type === "checkbox") ? options.split(",").map(opt => opt.trim()) : null
+            };
+
+            questions.push(newQuestion);
+            renderQuestions();
+
+            // Limpiar campos
+            document.getElementById("newQuestionText").value = "";
+            document.getElementById("inputOptions").value = "";
+            toggleOptionsInput();
+        }
+
+        // Función para renderizar las preguntas
+        function renderQuestions() {
+            const container = document.getElementById("questionsContainer");
+            container.innerHTML = ""; // Limpiar el contenedor
+
+            questions.forEach(({ id, text, type, options }) => {
+                const questionDiv = document.createElement("div");
+                questionDiv.className = "mb-3";
+
+                const label = document.createElement("label");
+                label.textContent = `${id}: ${text}`;
+                label.className = "form-label me-3";
+
+                let input;
+                if (type === "button") {
+                    input = document.createElement("button");
+                    input.textContent = text;
+                    input.className = "btn btn-outline-primary";
+                } else if (type === "checkbox") {
+                    input = document.createElement("div");
+                    options.forEach(option => {
+                        const checkboxDiv = document.createElement("div");
+                        checkboxDiv.className = "form-check";
+
+                        const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.className = "form-check-input";
+                        checkbox.value = option;
+
+                        const checkboxLabel = document.createElement("label");
+                        checkboxLabel.textContent = option;
+                        checkboxLabel.className = "form-check-label";
+
+                        checkboxDiv.appendChild(checkbox);
+                        checkboxDiv.appendChild(checkboxLabel);
+                        input.appendChild(checkboxDiv);
+                    });
+                } else if (type === "select") {
+                    input = document.createElement("select");
+                    input.className = "form-select";
+                    options.forEach(option => {
+                        const optionElement = document.createElement("option");
+                        optionElement.textContent = option;
+                        optionElement.value = option;
+                        input.appendChild(optionElement);
+                    });
+                }
+
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(input);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Función para eliminar una pregunta
+        function deleteQuestion() {
+            const idToDelete = parseInt(document.getElementById("deleteQuestionId").value);
+
+            if (isNaN(idToDelete)) {
+                alert("Introdueix un ID vàlid.");
+                return;
+            }
+
+            // Buscar y eliminar pregunta por ID
+            const index = questions.findIndex(q => q.id === idToDelete);
+            if (index !== -1) {
+                questions.splice(index, 1);
+                renderQuestions();
+                alert(`Pregunta amb ID ${idToDelete} eliminada.`);
+            } else {
+                alert("No s'ha trobat cap pregunta amb aquest ID.");
+            }
+
+            // Limpiar el campo
+            document.getElementById("deleteQuestionId").value = "";
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
