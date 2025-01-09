@@ -6,41 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriSalut</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="../Css/index.css" rel="stylesheet"> <!-- Ruta CSS -->
+    <link rel="shortcut icon" href="../assets/img/LogoIcon.ico" type="image/x-icon">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/main.css" rel="stylesheet">
+    <link href="../assets/css/styles.css" rel="stylesheet"> 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">NutriSalut</a>
+    <nav class="navbar navbar-expand-lg">
+        <a href="index.html" class="logo-small">
+            <img src="../assets/img/LogoIcon.ico" alt="Logo NutriSalut" class="logo-small"></img>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html"> </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="index.html">Inici</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="chatbot.html">Chat AI</a>
+                    <a class="nav-link" href="services.html">Chat AI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="manageAdmin.html">Administració de gestions</a>
+                    <a class="nav-link" href="dashboard.html">Administració de gestions</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <header class=""+>
+    <header>
         <div class="container">
             <h1 class="display-4">Bienvenido a NutriSalut</h1>
             <p class="lead">Desde 1980, liderando el camino hacia una vida más saludable</p>
         </div>
     </header>
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
         <div class="row g-3">
 
             <!-- Parte de la izquierda -->
@@ -81,7 +87,7 @@
                         </ul>
                     </section>
 
-                    <section class="mb-5">
+                    <section>
                         <h3 class="mb-3">Qué hacemos</h3>
                         <p class="fs-5 text-justify">
                             En NutriSalut ofrecemos una amplia gama de productos diseñados para potenciar la energía,
@@ -90,78 +96,68 @@
                             únicas de nuestros clientes.
                         </p>
                     </section>
-
-                    <section>
-                        <h3 class="mb-3">Nuestro legado</h3>
-                        <p class="fs-5 text-justify">
-                            A lo largo de más de cuatro décadas, NutriSalut ha crecido junto a sus clientes,
-                            construyendo una comunidad basada en la confianza y el amor por la salud. Hoy, seguimos
-                            avanzando con el mismo entusiasmo que nos impulsó a dar nuestros primeros pasos en 1980,
-                            comprometidos a ser el aliado ideal en tu camino hacia una vida más sana y equilibrada.
-                        </p>
-                        <p class="fs-5 text-center"><strong>NutriSalut: Donde la nutrición y la salud se
-                                encuentran.</strong></p>
-                    </section>
                 </div>
             </main>
 
             <!-- Parte de la derecha -->
             <div class="col-lg-4 col-md-6" id="colRight">
-                <h3 class="text-center mb-4">Descubre más sobre el comida saludable!</h3>
+                <h3 class="text-center mb-4">Explora nuestros productos</h3>
 
-                <!-- Primera fila dentro de la derecha -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <div class="card shadow-sm" id="colRightUp">
-                            <div class="card-body">
-                                <!-- Nombre de la comida -->
-                                <h4 id="food-name" class="card-title text-center">Nombre de la comida</h4>
-
-                                <hr class="my-4">
-
-                                <!-- Imagen de la comida -->
-                                <img id="food-image" src="" alt="Imagen de comida"
-                                    class="img-fluid mx-auto d-block rounded">
-
-                                <!-- Descripción de la comida -->
-                                <p id="food-description" class="card-text mt-3">Descripción de la comida</p>
-
-                                <!-- Ingredientes -->
-                                <h5 class="mt-3">Ingredientes:</h5>
-                                <ul id="food-ingredients" class="list-group">
-                                    <!-- Los ingredientes se agregarán aquí -->
-                                </ul>
-
-                                <!-- Beneficios -->
-                                <h5 class="mt-3">Beneficios:</h5>
-                                <ul id="food-benefits" class="list-group">
-                                    <!-- Los beneficios se agregarán aquí -->
-                                </ul>
-                            </div>
-                        </div>
+                <!-- Primera tarjeta de producto -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 id="food-name" class="card-title text-center">Barrita Energética</h4>
+                        <hr class="my-4">
+                        <img id="food-image" src="../assets/images/barrita.jpg" alt="Barrita Energética"
+                            class="img-fluid mx-auto d-block rounded">
+                        <p id="food-description" class="card-text mt-3">Perfecta para mantenerte activo en cualquier
+                            momento del día.</p>
+                        <h5 class="mt-3">Ingredientes:</h5>
+                        <ul id="food-ingredients" class="list-group">
+                            <li class="list-group-item">Avena integral</li>
+                            <li class="list-group-item">Miel natural</li>
+                            <li class="list-group-item">Frutos secos</li>
+                        </ul>
+                        <h5 class="mt-3">Beneficios:</h5>
+                        <ul id="food-benefits" class="list-group">
+                            <li class="list-group-item">Energía duradera</li>
+                            <li class="list-group-item">Fácil de llevar</li>
+                            <li class="list-group-item">Rica en nutrientes esenciales</li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- Segunda fila dentro de la derecha -->
-                <div class="row mt-3">
-                    <div class="col">
-                        <div
-                            style="width: 100%; max-width: 300px; height: 250px; background-color: #f1f1f1; border: 1px solid #ccc; 
-                        display: flex; flex-direction: column; justify-content: center; align-items: center; margin: auto;">
-                            <p style="font-size: 14px; color: #555; margin: 0;">Anuncio Simulado</p>
-                            <p style="font-size: 12px; color: #999; margin: 0;">300x250 px</p>
-                        </div>
+                <!-- Segunda tarjeta de producto -->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Batido de Proteína</h4>
+                        <hr class="my-4">
+                        <img src="../assets/images/batido.jpg" alt="Batido de Proteína"
+                            class="img-fluid mx-auto d-block rounded">
+                        <p class="card-text mt-3">Ideal para una rápida recuperación muscular después del ejercicio.</p>
+                        <h5 class="mt-3">Ingredientes:</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">Proteína de suero</li>
+                            <li class="list-group-item">Cacao natural</li>
+                            <li class="list-group-item">Stevia</li>
+                        </ul>
+                        <h5 class="mt-3">Beneficios:</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">Fomenta la recuperación muscular</li>
+                            <li class="list-group-item">Bajo en grasas</li>
+                            <li class="list-group-item">Sabor delicioso</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3">
+    <footer>
         <p class="mb-0">© 2024 NutriSalut. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="../JavaScript/randomPicture.js"></script>
+    <script src="../JavaScript/functions.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
