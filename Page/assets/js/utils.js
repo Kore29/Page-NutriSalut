@@ -52,7 +52,7 @@ function createOpcio() {
             Swal.fire({
                 title: 'No se pudo crear la opción. Revisa la consola para más detalles.',
                 icon: 'error',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: 1500
             });
         });
@@ -92,6 +92,12 @@ function getAllOpcions() {
         })
         .catch(function(error) {
             console.error('Error al obtener las opciones:', error);
+            Swal.fire({
+                title: 'No se pudieron obtener las opciones. Revisa la consola para más detalles.',
+                icon: 'error',
+                showConfirmButton: true,
+                timer: 1500
+            });
         });
 }
 
@@ -128,7 +134,7 @@ function updateOpcio(id) {
             Swal.fire({
                 title: 'Error al actualizar la opción.',
                 icon: 'error',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: 1500
             });
         });
@@ -158,7 +164,7 @@ function deleteOpcio(id) {
         Swal.fire({
             title: 'Error al eliminar la opción.',
             icon: 'error',
-            showConfirmButton: false,
+            showConfirmButton: true,
             timer: 1500
         });
     });

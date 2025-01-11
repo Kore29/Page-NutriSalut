@@ -9,21 +9,16 @@ nav {
     position: relative;
 }
 
-.logo-small {
-    width: 78px;
-    height: auto;
-    margin-top: -28px;
-    position: absolute;
-    transition: transform 0.3s ease;
-}
-
-.logo-small:hover {
-    transform: scale(1.1);
-}
-
 .nav-item {
     margin-left: 40px;
     margin-right: 20px;
+}
+
+.navbar-nav .nav-link.active {
+    text-decoration: underline;
+    text-underline-offset: 4px; /* Distancia del subrayado al texto */
+    text-decoration-thickness: 2px; /* Grosor del subrayado */
+    color: #007bff; /* Color del enlace (opcional) */
 }
 
 nav a.navbar-brand {
@@ -58,10 +53,14 @@ header p {
 }
 
 main {
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: justify;
     padding: 30px;
     border-radius: 8px;
+}
+
+.content {
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 ul.list-group li {
@@ -86,15 +85,4 @@ ul.list-group li {
 
 .card img {
     border: 2px solid #ffa726;
-}
-
-footer {
-    background: #333;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-}
-
-footer p {
-    margin: 0;
 }
