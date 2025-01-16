@@ -115,7 +115,7 @@ function showRandomFoods() {
       cardBody.classList.add("card-body");
 
       const cardTitle = document.createElement("h5");
-      cardTitle.classList.add("card-title", "text-center", "text-primary");
+      cardTitle.classList.add("card-title", "text-center");
       cardTitle.innerText = food.name;
 
       const cardDescription = document.createElement("p");

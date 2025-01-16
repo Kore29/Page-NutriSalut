@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": 1,
+    "nom_opcio": "Tipo de alimento",
+    "tipus_opcio": "select",
+    "contigut": "Vegetales, Carne, Pescado, Pollo",
+    "descripcio_opcio": "."
+  },
+  {
+    "id": 2,
+    "nom_opcio": "Tamaño",
+    "tipus_opcio": "select",
+    "contigut": "Grande, Pequeño, Mediano",
+    "descripcio_opcio": "."
+  },
+  {
+    "id": 3,
+    "nom_opcio": "Esto es una prueba final",
+    "tipus_opcio": "select",
+    "contigut": "mariposa, fuego, destrucción",
+    "descripcio_opcio": "Esto es una descriìoón"
+  }
+]

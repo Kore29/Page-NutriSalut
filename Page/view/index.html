@@ -7,9 +7,7 @@
     <title>NutriSalut</title>
 
     <link rel="shortcut icon" href="../assets/img/LogoIcon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/main.css" rel="stylesheet">
-    <link href="../assets/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
 
 <body class="bg-light">
@@ -38,67 +36,82 @@
     </nav>
 
     <!-- Header -->
-    <header class="bg-primary text-white py-5">
-        <div class="container text-center">
-            <h1 class="display-4">Bienvenido a NutriSalut</h1>
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Bienvenido a NutriSalut</h1>
             <p class="lead">Desde 1980, liderando el camino hacia una vida más saludable</p>
         </div>
     </header>
 
     <!-- Main Content -->
-    <div class="container-fluid mt-5">
+    <main class="container mt-5">
         <div class="row g-4">
             <!-- Left Column -->
-            <main class="col-lg-8">
-                <div class="content">
-                    <section class="mb-5">
-                        <h2 class="text-center mb-4 text-primary">Sobre Nosotros</h2>
-                        <p class="fs-5 text-justify">
-                            Desde 1980, <strong>NutriSalut</strong> ha liderado el camino en el mundo de la nutrición y el bienestar, convirtiéndose en un referente para aquellos que buscan una vida más saludable y equilibrada. Con más de 40 años de experiencia, hemos construido una marca que combina tradición, innovación y un compromiso inquebrantable con la excelencia.
-                        </p>
-                    </section>
-    
-                    <section class="mb-5">
-                        <h3 class="mb-3 text-primary">Nuestra misión</h3>
-                        <p class="fs-5 text-justify">
-                            En NutriSalut, entendemos que la salud es el pilar fundamental de una vida plena. Por ello, nos dedicamos a desarrollar productos de calidad superior que respalden un estilo de vida activo y saludable, tanto para atletas como para personas que buscan mejorar su bienestar general.
-                        </p>
-                    </section>
-    
-                    <section class="mb-5">
-                        <h3 class="mb-3 text-primary">Nuestros valores</h3>
-                        <ul class="list-group fs-5">
-                            <li class="list-group-item"><strong>Calidad y confianza:</strong> Todos nuestros productos pasan por rigurosos procesos de control y están formulados con los mejores ingredientes del mercado.</li>
-                            <li class="list-group-item"><strong>Innovación constante:</strong> Nos mantenemos a la vanguardia, incorporando las últimas investigaciones científicas en nutrición y bienestar.</li>
-                            <li class="list-group-item"><strong>Cercanía y compromiso:</strong> Nos importa cada cliente. Estamos aquí para acompañarte en tu viaje hacia una mejor salud, ofreciendo soluciones personalizadas y apoyo continuo.</li>
-                        </ul>
-                    </section>
-    
-                    <section>
-                        <h3 class="mb-3 text-primary">Qué hacemos</h3>
-                        <p class="fs-5 text-justify">
-                            En NutriSalut ofrecemos una amplia gama de productos diseñados para potenciar la energía, mejorar el rendimiento y fomentar una recuperación óptima. Desde suplementos nutricionales hasta alimentos funcionales, cada producto está pensado para adaptarse a las necesidades únicas de nuestros clientes.
-                        </p>
-                    </section>
+            <section class="col-lg-8">
+                <div class="mb-5">
+                    <h2 class="text-center text-primary mb-4">Sobre Nosotros</h2>
+                    <p class="fs-5 text-justify">
+                        Desde 1980, <strong>NutriSalut</strong> ha liderado el camino en el mundo de la nutrición y el bienestar, convirtiéndose en un referente para aquellos que buscan una vida más saludable y equilibrada. Con más de 40 años de experiencia, hemos construido una marca que combina tradición, innovación y un compromiso inquebrantable con la excelencia.
+                    </p>
                 </div>
-            </main>
+
+                <div class="mb-5">
+                    <h3 class="text-primary mb-3">Nuestra misión</h3>
+                    <p class="fs-5 text-justify">
+                        En NutriSalut, entendemos que la salud es el pilar fundamental de una vida plena. Por ello, nos dedicamos a desarrollar productos de calidad superior que respalden un estilo de vida activo y saludable, tanto para atletas como para personas que buscan mejorar su bienestar general.
+                    </p>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="text-primary mb-3">Nuestros valores</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Calidad y confianza:</strong> Todos nuestros productos pasan por rigurosos procesos de control y están formulados con los mejores ingredientes del mercado.</li>
+                        <li class="list-group-item"><strong>Innovación constante:</strong> Nos mantenemos a la vanguardia, incorporando las últimas investigaciones científicas en nutrición y bienestar.</li>
+                        <li class="list-group-item"><strong>Cercanía y compromiso:</strong> Nos importa cada cliente. Estamos aquí para acompañarte en tu viaje hacia una mejor salud, ofreciendo soluciones personalizadas y apoyo continuo.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-primary mb-3">Qué hacemos</h3>
+                    <p class="fs-5 text-justify">
+                        En NutriSalut ofrecemos una amplia gama de productos diseñados para potenciar la energía, mejorar el rendimiento y fomentar una recuperación óptima. Desde suplementos nutricionales hasta alimentos funcionales, cada producto está pensado para adaptarse a las necesidades únicas de nuestros clientes.
+                    </p>
+                </div>
+            </section>
 
             <!-- Right Column -->
             <aside class="col-lg-4">
-                <h3 class="text-center mb-4 text-primary">Explora nuestros productos</h3>
-            
-                <!-- Product Cards -->
-                <div id="product-container">
-                    <!-- Los productos se generarán aquí mediante el script -->
+                <div class="p-4 bg-white shadow-sm rounded">
+                    <h3 class="text-primary text-center mb-4">Explora nuestros productos</h3>
+                    <div id="product-container">
+                        <!-- Los productos se generarán aquí mediante el script -->
+                    </div>
                 </div>
             </aside>
         </div>
-    </div>
-
-    <br><br>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/functions.js"></script>
 </body>
 
 </html>
+
+
+<style>
+    .card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.list-group-item {
+    color: #676767;
+}
+</style>
