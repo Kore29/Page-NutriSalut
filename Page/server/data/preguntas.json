@@ -1,23 +1,23 @@
 [
   {
     "id": 1,
-    "nom_opcio": "Tipo de alimento",
+    "nom_opcio": "Tipo de comida",
     "tipus_opcio": "select",
-    "contigut": "Vegetales, Carne, Pescado, Pollo",
-    "descripcio_opcio": "."
+    "contigut": "Vegetariana, Vegana, Omnívora, Sin Gluten",
+    "descripcio_opcio": "Selecciona el tipo de comida preferido."
   },
   {
     "id": 2,
-    "nom_opcio": "Tamaño",
+    "nom_opcio": "Estilo de cocina",
     "tipus_opcio": "select",
-    "contigut": "Grande, Pequeño, Mediano",
-    "descripcio_opcio": "."
+    "contigut": "Mediterránea, Italiana, Mexicana, China, Japonesa",
+    "descripcio_opcio": "Selecciona el estilo de cocina preferido."
   },
   {
     "id": 3,
-    "nom_opcio": "Esto es una prueba final",
-    "tipus_opcio": "select",
-    "contigut": "mariposa, fuego, destrucción",
-    "descripcio_opcio": "Esto es una descriìoón"
+    "nom_opcio": "¿Prefieres comida rápida?",
+    "tipus_opcio": "radio",
+    "contigut": "Sí, No",
+    "descripcio_opcio": "¿Te gusta la comida rápida o prefieres opciones más saludables?"
   }
 ]

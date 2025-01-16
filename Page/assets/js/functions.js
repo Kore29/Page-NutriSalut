@@ -109,7 +109,7 @@ function showRandomFoods() {
 
   shuffledFoods.forEach(food => {
       const card = document.createElement("div");
-      card.classList.add("card", "shadow-sm", "mb-4");
+      card.classList.add("card", "shadow", "mb-4");
 
       const cardBody = document.createElement("div");
       cardBody.classList.add("card-body");

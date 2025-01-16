@@ -8,6 +8,40 @@
 
     <link rel="shortcut icon" href="../assets/img/LogoIcon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <style>
+        /* Cambiar color de la clase .text-primary */
+        .text-primary {
+            color: #2d7e40 !important;  /* Verde */
+        }
+
+        /* Cambiar color de fondo en elementos que usan la clase bg-primary */
+        .bg-primary {
+            background-color: #2d7e40 !important;  /* Verde */
+        }
+
+        /* Estilo adicional para .card */
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Color de texto en los list-group-item */
+        .list-group-item {
+            color: #676767;
+        }
+
+        .list-group-item:hover {
+            background-color: #bdbdbd6a;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -62,7 +96,7 @@
                     </p>
                 </div>
 
-                <div class="mb-5">
+                <div class="mb-4">
                     <h3 class="text-primary mb-3">Nuestros valores</h3>
                     <ul class="list-group">
                         <li class="list-group-item"><strong>Calidad y confianza:</strong> Todos nuestros productos pasan por rigurosos procesos de control y están formulados con los mejores ingredientes del mercado.</li>
@@ -72,17 +106,24 @@
                 </div>
 
                 <div>
-                    <h3 class="text-primary mb-3">Qué hacemos</h3>
+                    <h3 class="text-primary mb-4">Qué hacemos</h3>
                     <p class="fs-5 text-justify">
                         En NutriSalut ofrecemos una amplia gama de productos diseñados para potenciar la energía, mejorar el rendimiento y fomentar una recuperación óptima. Desde suplementos nutricionales hasta alimentos funcionales, cada producto está pensado para adaptarse a las necesidades únicas de nuestros clientes.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-primary mv-4">Asesoría Personalizada Con AI</h3>
+                    <p class="fs-5 text-justify">
+                        Entendemos que cada persona tiene necesidades nutricionales únicas, por eso ofrecemos un servicio de asesoría personalizada. Nuestros expertos trabajan contigo para crear planes de alimentación adaptados a tu estilo de vida, objetivos y preferencias, asegurándose de que sigas un camino que se ajuste a tus necesidades individuales.
                     </p>
                 </div>
             </section>
 
             <!-- Right Column -->
             <aside class="col-lg-4">
-                <div class="p-4 bg-white shadow-sm rounded">
-                    <h3 class="text-primary text-center mb-4">Explora nuestros productos</h3>
+                <div class="p-4 bg-white rounded shadow">
+                    <h3 class="text-primary text-center mb-4">Descubre una nueva receta cada vez que entres!</h3>
                     <div id="product-container">
                         <!-- Los productos se generarán aquí mediante el script -->
                     </div>
@@ -91,27 +132,10 @@
         </div>
     </main>
 
+    <br><br>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/functions.js"></script>
 </body>
 
 </html>
-
-
-<style>
-    .card {
-    border: none;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.list-group-item {
-    color: #676767;
-}
-</style>

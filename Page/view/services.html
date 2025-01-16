@@ -43,7 +43,7 @@
         </div>
 
         <!-- Sección de preguntas -->
-        <div class="card shadow-sm mb-4">
+        <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h2 class="h5 mb-0">Preguntas</h2>
             </div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="card-header bg-secondary text-white">
-                <h2 class="h5 mb-0">Envía mas detalles para mejorar tu experiencia (opcional)</h2>
+                <h2 class="h5 mb-0">Envía más detalles para mejorar tu experiencia (opcional)</h2>
             </div>
             <div class="card-body">
                 <textarea id="texto-peticion" class="form-control mb-3" rows="3"
@@ -65,8 +65,49 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Cambiar color de la clase .text-primary */
+        .text-primary {
+            color: #2d7e40 !important;
+            /* Verde */
+        }
+
+        /* Cambiar color de fondo en elementos que usan la clase bg-primary */
+        .bg-primary {
+            background-color: #2d7e40 !important;
+            /* Verde */
+        }
+
+        /* Cambiar color de fondo en elementos que usan la clase bg-secondary */
+        .bg-secondary {
+            background-color: #2d7e40 !important;
+            /* Gris para bg-secondary */
+        }
+
+        /* Estilo adicional para .card */
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 8px 21px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background-color: #2d7e40 !important;
+            border-color: #2d7e40 !important;
+            /* Cambiar el borde también */
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.06);
+        }
+    </style>
 
     <!-- Script principal -->
     <script>
