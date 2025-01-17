@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.2">
     <title>NutriSalut</title>
 
     <link rel="shortcut icon" href="../assets/img/LogoIcon.ico" type="image/x-icon">
@@ -38,12 +38,12 @@
     <div class="container mt-5">
         <!-- Título principal -->
         <div class="text-center mb-5">
-            <h1 class="fw-bold">Chatbot Client Example</h1>
+            <h1 class="fw-bold text-primary">Chatbot Client Example</h1>
             <p class="text-muted">Interactúa con nuestro sistema para resolver tus dudas y enviar sugerencias.</p>
         </div>
 
         <!-- Sección de preguntas -->
-        <div class="card mb-4">
+        <div class="card mb-4 shadow-sm">
             <div class="card-header bg-primary text-white">
                 <h2 class="h5 mb-0">Preguntas</h2>
             </div>
@@ -56,16 +56,62 @@
                 <h2 class="h5 mb-0">Envía más detalles para mejorar tu experiencia (opcional)</h2>
             </div>
             <div class="card-body">
-                <textarea id="texto-peticion" class="form-control mb-3" rows="3"
+                <textarea id="texto-peticion" class="form-control mb-3 shadow-sm" rows="3"
                     placeholder="Escribe tu sugerencia aquí..."></textarea>
                 <div class="text-end mt-4">
-                    <button class="btn btn-primary px-4" onclick="enviarRespuestas()">Enviar Respuestas</button>
+                    <button class="btn btn-primary px-4 shadow-sm" id="enviarPeticion">Enviar Respuestas</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Contenedor de la respuesta -->
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Respuesta del AI</h5>
+            </div>
+            <div class="card-body" id="respuesta" style="min-height: 150px;">
+                <!-- Aquí se mostrará la respuesta -->
             </div>
         </div>
     </div>
 
+    <br><br>
+
+
     <style>
+        .btn-primary {
+            background-color: #2d7e40 !important;
+            /* Verde principal */
+            border-color: #2d7e40 !important;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #246532 !important;
+            transform: scale(1.05);
+        }
+
+        #respuesta {
+            background-color: #eae7d0;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Roboto', sans-serif;
+            color: #212529;
+            white-space: pre-wrap;
+            /* Preserva espacios y saltos de línea */
+        }
+
+        h1,
+        h2,
+        h5 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .card-body p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
         /* Cambiar color de la clase .text-primary */
         .text-primary {
             color: #2d7e40 !important;
@@ -87,15 +133,9 @@
         /* Estilo adicional para .card */
         .card {
             border: none;
-            border-radius: 10px;
             overflow: hidden;
             transition: transform 0.3s;
             box-shadow: 0 8px 21px rgba(0, 0, 0, 0.2);
-        }
-
-        .card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary {
@@ -104,8 +144,12 @@
             /* Cambiar el borde también */
         }
 
-        .btn-primary:hover {
-            transform: scale(1.06);
+        pre {
+            margin: auto;
+            /* Elimina el margen por defecto */
+            padding: 8px;
+            /* Agrega un poco de espacio interno para legibilidad */
+            /* Borde para destacar el contenedor */
         }
     </style>
 
@@ -160,44 +204,93 @@
                 });
         }
 
-        function enviarRespuestas() {
-            const respuestas = [];
-            const preguntasList = document.querySelectorAll('[name]'); // Seleccionar todos los inputs o selects con atributo name
-
-            preguntasList.forEach(input => {
-                const name = input.name; // Nombre de la pregunta
-                let respuesta;
-
-                if (input.type === 'radio') {
-                    if (input.checked) {
-                        respuesta = input.value; // Capturar el valor seleccionado
-                        respuestas.push({ pregunta: name, respuesta });
-                    }
-                } else if (input.tagName === 'SELECT') {
-                    respuesta = input.value; // Capturar el valor del select
-                    respuestas.push({ pregunta: name, respuesta });
-                }
-            });
-
-            // Enviar las respuestas al servidor
-            fetch('http://localhost:3000/guardar-respuestas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(respuestas)
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        alert('Respuestas enviadas correctamente');
-                    } else {
-                        throw new Error('Error al enviar las respuestas');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error al enviar las respuestas:', error);
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDyHz6VsJBDWVYk8_rSKeuONOGHsgOKkX0";
+        async function query(data) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify(data),
                 });
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                console.error("Error al llamar a la IA:", error);
+                return null;
+            }
         }
+
+        function generarPromptElaborado() {
+
+            const contenedor = document.getElementById('preguntas-list');
+            const inputs = contenedor.querySelectorAll('input, select');
+            const datos = {};
+            // Recorremos todos los inputs
+            for (let i = 0; i < inputs.length; i++) {
+                const input = inputs[i];
+                // Si es un radio y está marcado, lo guardamos
+                if (input.type === 'radio' && input.checked) {
+                    datos[input.name] = input.value;
+                }
+                // Si es un select, guardamos su valor
+                else if (input.tagName === 'SELECT') {
+                    datos[input.id] = input.value;
+                }
+            }
+
+            // Tomamos el texto que el usuario introdujo
+            const textoPersonalizado = document.getElementById('texto-peticion').value;
+            datos.texto_personalizado = textoPersonalizado;
+
+            let prompt = "QUiero hacer un plan de alimentación\n\n";
+            // Recorremos el objeto con los valores seleccionados
+            for (const clave in datos) {
+                if (clave !== "texto_personalizado") {
+                    prompt += `- ${clave}: ${datos[clave]}\n`;
+                }
+            }
+
+            // Agregamos el texto personalizado del usuario
+            if (datos.texto_personalizado) {
+                prompt += `\nAdemás, me gustaría destacar lo siguiente: ${datos.texto_personalizado}\n`;
+            }
+
+            prompt += '\n Ten en cuanta lo siguiente: mandamelo en formato html, (no escribas ```html del principio y ``` del final) algo simple, ajustate a las propiedades no mandes ningún texto adicional, no pongas una tabla'
+
+            prompt += "\n¿Podrías hacerme este plan con las propiedades";
+            return prompt;
+        }
+
+        document.getElementById('enviarPeticion').addEventListener('click', function () {
+
+            text = document.getElementById("text-ai")
+            //AQUI TENEMOS QUE HJACER EL CODIGO PARA COGER LA INFORMACION SELECCIONADA DE LA PAGINA
+            promptGenerado = "cuentame un chiste"
+
+            promptGenerado = generarPromptElaborado();
+            console.log(promptGenerado);
+            // Hacemos la llamada al modelo
+            const promptPeticion = {
+                "contents": [{
+                    "parts": [{ "text": promptGenerado }]
+                }]
+            }
+
+            query(promptPeticion).then((response) => {
+                const respuestaContenedor = document.getElementById('respuesta');
+                if (response && response.candidates && response.candidates[0].content.parts[0].text) {
+                    const respuestaTexto = response.candidates[0].content.parts[0].text;
+                    respuestaContenedor.innerHTML = `<pre>${respuestaTexto}</pre>`; // Mostrar con formato respetando espacios
+                } else {
+                    respuestaContenedor.textContent = "Hubo un error al obtener la respuesta.";
+                }
+            }).catch((error) => {
+                const respuestaContenedor = document.getElementById('respuesta');
+                respuestaContenedor.textContent = "Error al procesar la solicitud: " + error.message;
+                console.error(error);
+            });
+        });
+
+
 
         // Cargar las preguntas al iniciar la página
         document.addEventListener('DOMContentLoaded', getAllPreguntas);
