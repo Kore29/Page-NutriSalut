@@ -36,41 +36,47 @@
     </nav>
 
     <div class="container mt-5">
-        <!-- Título principal -->
-        <div class="text-center mb-5">
-            <h1 class="fw-bold text-primary">Chatbot Client Example</h1>
-            <p class="text-muted">Interactúa con nuestro sistema para resolver tus dudas y enviar sugerencias.</p>
-        </div>
-
-        <!-- Sección de preguntas -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h2 class="h5 mb-0">Preguntas</h2>
+        <div class="row">
+            <!-- Título principal -->
+            <div class="text-center mb-5">
+                <h1 class="fw-bold text-primary">Chatbot Client Example</h1>
+                <p class="text-muted">Interactúa con nuestro sistema para resolver tus dudas y enviar sugerencias.
+                </p>
             </div>
-            <div class="card-body">
-                <div id="preguntas-list" class="row gy-2">
-                    <!-- Aquí se generarán las preguntas dinámicamente -->
+            <div class="col-4">
+                <!-- Sección de preguntas -->
+                <div class="card mb-4 shadow-sm" id="questions">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h5 mb-0">Preguntas</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="preguntas-list" class="row gy-2">
+                            <!-- Aquí se generarán las preguntas dinámicamente -->
+                        </div>
+                    </div>
+                    <div class="card-header bg-secondary text-white">
+                        <h2 class="h5 mb-0">Envía más detalles para mejorar tu experiencia (opcional)</h2>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="texto-peticion" class="form-control mb-3 shadow-sm" rows="3"
+                            placeholder="Escribe tu sugerencia aquí..."></textarea>
+                        <div class="text-end mt-4">
+                            <button class="btn btn-primary px-4 shadow-sm" id="enviarPeticion">Enviar
+                                Respuestas</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card-header bg-secondary text-white">
-                <h2 class="h5 mb-0">Envía más detalles para mejorar tu experiencia (opcional)</h2>
-            </div>
-            <div class="card-body">
-                <textarea id="texto-peticion" class="form-control mb-3 shadow-sm" rows="3"
-                    placeholder="Escribe tu sugerencia aquí..."></textarea>
-                <div class="text-end mt-4">
-                    <button class="btn btn-primary px-4 shadow-sm" id="enviarPeticion">Enviar Respuestas</button>
+            <div class="col-8">
+                <!-- Contenedor de la respuesta -->
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h5></h5>
+                    </div>
+                    <div class="card-body" id="respuesta">
+                        <!-- Aquí se mostrará la respuesta -->
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Contenedor de la respuesta -->
-        <div class="card shadow-lg">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Respuesta del AI</h5>
-            </div>
-            <div class="card-body" id="respuesta" style="min-height: 150px;">
-                <!-- Aquí se mostrará la respuesta -->
             </div>
         </div>
     </div>
@@ -79,6 +85,10 @@
 
 
     <style>
+        #questions {
+            background-color: white;
+        }
+
         .btn-primary {
             background-color: #2d7e40 !important;
             /* Verde principal */
@@ -89,16 +99,6 @@
         .btn-primary:hover {
             background-color: #246532 !important;
             transform: scale(1.05);
-        }
-
-        #respuesta {
-            background-color: #eae7d0;
-            border-radius: 10px;
-            padding: 15px;
-            font-family: 'Roboto', sans-serif;
-            color: #212529;
-            white-space: pre-wrap;
-            /* Preserva espacios y saltos de línea */
         }
 
         h1,
@@ -141,15 +141,28 @@
         .btn-primary {
             background-color: #2d7e40 !important;
             border-color: #2d7e40 !important;
-            /* Cambiar el borde también */
         }
 
-        pre {
-            margin: auto;
-            /* Elimina el margen por defecto */
-            padding: 8px;
-            /* Agrega un poco de espacio interno para legibilidad */
-            /* Borde para destacar el contenedor */
+        #respuesta pre {
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 10px;
+            /* Espaciado interno */
+            margin: 0;
+            /* Elimina márgenes adicionales */
+            font-size: 0.9rem;
+            /* Tamaño de fuente ajustado */
+        }
+
+
+        #respuesta {
+            max-height: 300px;
+            background-color: white;
+            overflow-y: auto;
+            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
         }
     </style>
 
@@ -251,11 +264,8 @@
 
             // Agregamos el texto personalizado del usuario
             if (datos.texto_personalizado) {
-                prompt += `\nAdemás, me gustaría destacar lo siguiente: ${datos.texto_personalizado}\n`;
+                prompt += `\nAdemás, me gustaría destacar lo siguiente: ${datos.texto_personalizado}\n y no pongas una tabla, que sea entendible`;
             }
-
-            prompt += '\n Ten en cuanta lo siguiente: mandamelo en formato html, (no escribas ```html del principio y ``` del final) algo simple, ajustate a las propiedades no mandes ningún texto adicional, no pongas una tabla'
-
             prompt += "\n¿Podrías hacerme este plan con las propiedades";
             return prompt;
         }
@@ -263,9 +273,8 @@
         document.getElementById('enviarPeticion').addEventListener('click', function () {
 
             text = document.getElementById("text-ai")
+            
             //AQUI TENEMOS QUE HJACER EL CODIGO PARA COGER LA INFORMACION SELECCIONADA DE LA PAGINA
-            promptGenerado = "cuentame un chiste"
-
             promptGenerado = generarPromptElaborado();
             console.log(promptGenerado);
             // Hacemos la llamada al modelo
@@ -278,8 +287,8 @@
             query(promptPeticion).then((response) => {
                 const respuestaContenedor = document.getElementById('respuesta');
                 if (response && response.candidates && response.candidates[0].content.parts[0].text) {
-                    const respuestaTexto = response.candidates[0].content.parts[0].text;
-                    respuestaContenedor.innerHTML = `<pre>${respuestaTexto}</pre>`; // Mostrar con formato respetando espacios
+                    let respuestaTexto = response.candidates[0].content.parts[0].text.trim(); // Recorta espacios innecesarios
+                    respuestaContenedor.innerHTML = `<code>${respuestaTexto}</code>`; // Mostrar con formato respetando espacios
                 } else {
                     respuestaContenedor.textContent = "Hubo un error al obtener la respuesta.";
                 }
