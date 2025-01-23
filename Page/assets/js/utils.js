@@ -82,7 +82,7 @@ function getAllOpcions() {
                         <td>${opcio.contigut}</td>
                         <td>${opcio.descripcio_opcio}</td>
                         <td>
-                            <button class="btn btn-primary px-2" onclick="updateOpcio(${opcio.id})">Actualizar</button>
+                            <button class="btn btn-primary px-2" onclick="updateOpcio(${opcio.id})">Renombrar</button>
                             <button class="btn btn-primary px-2" onclick="deleteOpcio(${opcio.id})">Eliminar</button>
                         </td>
                     </tr>

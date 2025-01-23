@@ -35,6 +35,11 @@
         </div>
     </nav>
 
+    <div id="spinner-background">
+        <img id="spinner" src="../assets/img/loading-gif.gif"></img>
+    </div>
+
+
     <div class="container mt-5">
         <div class="row">
             <!-- Título principal -->
@@ -86,6 +91,34 @@
 
 
     <style>
+        #spinner {
+            position: fixed;
+            /* Fijo en la pantalla */
+            top: 50%;
+            /* Centrado verticalmente */
+            left: 50%;
+            /* Centrado horizontalmente */
+            transform: translate(-50%, -50%);
+            /* Ajuste perfecto al centro */
+            z-index: 99999;
+            /* Muy alto para estar por encima */
+            pointer-events: none;
+            /* Permite interacción con el fondo */
+            display: none;
+
+            background-color: rgba(0, 0, 0, 0.498);
+            padding: 100%;
+        }
+
+        #spinner img {
+            width: 80px;
+            /* Ajusta el tamaño según necesites */
+            height: 80px;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
 
         .chat-respuestas {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -170,6 +203,16 @@
 
     <!-- Script principal -->
     <script>
+        function mostrarSpinner() {
+            document.getElementById("spinner").style.display = "flex"; // Mostrar el spinner
+            document.body.classList.add("no-scroll"); // Desactivar el scroll
+        }
+
+        function ocultarSpinner() {
+            document.getElementById("spinner").style.display = "none"; // Ocultar el spinner
+            document.body.classList.remove("no-scroll"); // Reactivar el scroll 
+        }
+
         function getAllPreguntas() {
             fetch('http://localhost:3000/preguntas') // Ajusta la URL según tu configuración del servidor
                 .then(function (response) {
@@ -189,15 +232,16 @@
 
                         // Generar el input según el tipo
                         if (pregunta.tipus_opcio === 'radio') {
-                            inputHTML = opciones.map(opcion => `
+                            inputHTML = opciones.map((opcion, index) => `
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="${pregunta.nom_opcio}" value="${opcion}" id="${pregunta.nom_opcio}-${opcion}">
+                                    <input class="form-check-input" type="radio" name="${pregunta.nom_opcio}" value="${opcion}" id="${pregunta.nom_opcio}-${opcion}" ${index === 0 ? 'checked' : ''}>
                                     <label class="form-check-label" for="${pregunta.nom_opcio}-${opcion}">${opcion}</label>
                                 </div>
                             `).join('');
                         } else if (pregunta.tipus_opcio === 'select') {
                             inputHTML = `
                                 <select class="form-select" name="${pregunta.nom_opcio}">
+                                    <option value="" disabled selected>Selecciona una opción</option>
                                     ${opciones.map(opcion => `<option value="${opcion}">${opcion}</option>`).join('')}
                                 </select>
                             `;
@@ -239,9 +283,11 @@
             const contenedor = document.getElementById('preguntas-list');
             const inputs = contenedor.querySelectorAll('input, select');
             const datos = {};
+
             // Recorremos todos los inputs
             for (let i = 0; i < inputs.length; i++) {
                 const input = inputs[i];
+                console.log(input)
                 // Si es un radio y está marcado, lo guardamos
                 if (input.type === 'radio' && input.checked) {
                     datos[input.name] = input.value;
@@ -256,24 +302,27 @@
             const textoPersonalizado = document.getElementById('texto-peticion').value;
             datos.texto_personalizado = textoPersonalizado;
 
-            let prompt = "QUiero hacer un plan de alimentación\n\n";
+            console.log(datos);
+
+            let prompt = "Quiero hacer un plan de alimentación\n\n";
             // Recorremos el objeto con los valores seleccionados
             for (const clave in datos) {
                 if (clave !== "texto_personalizado") {
-                    prompt += `- ${clave}: ${datos[clave]}\n`;
+                    prompt += `${clave} - ${datos[clave]}\n`;
                 }
             }
 
             // Agregamos el texto personalizado del usuario
             if (datos.texto_personalizado) {
-                prompt += `\nAdemás, me gustaría destacar lo siguiente: ${datos.texto_personalizado}\n y no pongas una tabla, que sea entendible`;
+                prompt += `\nAdemás, me gustaría destacar lo siguiente: ${datos.texto_personalizado} y no pongas una tabla, que sea entendible`;
             }
-            prompt += "\n¿Podrías hacerme este plan con las propiedades";
+            prompt += "\n¿Podrías hacerme este plan?";
             return prompt;
         }
 
         document.getElementById('enviarPeticion').addEventListener('click', function () {
 
+            mostrarSpinner();
             text = document.getElementById("text-ai")
 
             //AQUI TENEMOS QUE HJACER EL CODIGO PARA COGER LA INFORMACION SELECCIONADA DE LA PAGINA
@@ -298,7 +347,10 @@
                 const respuestaContenedor = document.getElementById('respuesta');
                 respuestaContenedor.textContent = "Error al procesar la solicitud: " + error.message;
                 console.error(error);
-            });
+            })
+                .finally(() => {
+                    ocultarSpinner();
+                });
         });
 
 

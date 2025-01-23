@@ -1,23 +1,23 @@
 [
   {
-    "id": 1,
-    "nom_opcio": "Tipo de comida",
-    "tipus_opcio": "select",
-    "contigut": "Vegetariana, Vegana, Omnívora, Sin Gluten",
-    "descripcio_opcio": "Selecciona el tipo de comida preferido."
-  },
-  {
-    "id": 2,
-    "nom_opcio": "Estilo de cocina",
-    "tipus_opcio": "select",
-    "contigut": "Mediterránea, Italiana, Mexicana, China, Japonesa",
-    "descripcio_opcio": "Selecciona el estilo de cocina preferido."
-  },
-  {
     "id": 3,
     "nom_opcio": "¿Prefieres comida rápida?",
     "tipus_opcio": "radio",
     "contigut": "Sí, No",
     "descripcio_opcio": "¿Te gusta la comida rápida o prefieres opciones más saludables?"
+  },
+  {
+    "id": 4,
+    "nom_opcio": "Estilo de cocina",
+    "tipus_opcio": "select",
+    "contigut": "Poco, Medio, Mucho, Muchissimo",
+    "descripcio_opcio": "Pide el tipo de comida que deseas"
+  },
+  {
+    "id": 4,
+    "nom_opcio": "Tipo de comida",
+    "tipus_opcio": "select",
+    "contigut": "Mediterrania, Asiatica, Italiana, Francesa :(, Rusa",
+    "descripcio_opcio": ""
   }
 ]
