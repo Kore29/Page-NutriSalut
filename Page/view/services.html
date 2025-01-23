@@ -69,13 +69,14 @@
             </div>
             <div class="col-8">
                 <!-- Contenedor de la respuesta -->
-                <div class="card shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                        <h5></h5>
+                <div class="chat-respuestas card mb-4 shadow-sm">
+                    <div class="card-header bg-primary text-white text-center" id="hst"
+                        style="border-radius: 0px; padding: 5px;">
+                        <h5>Chat de la AI</h5>
                     </div>
-                    <div class="card-body" id="respuesta">
+                    <pre class="card-body text-justify-pre" id="respuesta">
                         <!-- Aquí se mostrará la respuesta -->
-                    </div>
+                    </pre>
                 </div>
             </div>
         </div>
@@ -85,8 +86,31 @@
 
 
     <style>
+
+        .chat-respuestas {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chat-respuestas:hover {
+            transform: scale(1.02);
+            /* Escalar ligeramente el elemento */
+        }
+
         #questions {
             background-color: white;
+        }
+
+        .text-justify-pre {
+            text-align: justify;
+            /* Justifica el texto */
+            white-space: pre-wrap;
+            /* Permite que el texto envuelva líneas */
+            font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
+
+            background-color: rgb(255, 255, 255);
+            height: 565px;
+            scrollbar-width: none;
         }
 
         .btn-primary {
@@ -141,28 +165,6 @@
         .btn-primary {
             background-color: #2d7e40 !important;
             border-color: #2d7e40 !important;
-        }
-
-        #respuesta pre {
-            max-width: 100%;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            padding: 10px;
-            /* Espaciado interno */
-            margin: 0;
-            /* Elimina márgenes adicionales */
-            font-size: 0.9rem;
-            /* Tamaño de fuente ajustado */
-        }
-
-
-        #respuesta {
-            max-height: 300px;
-            background-color: white;
-            overflow-y: auto;
-            padding: 10px;
-            font-family: Arial, Helvetica, sans-serif;
         }
     </style>
 
@@ -273,7 +275,7 @@
         document.getElementById('enviarPeticion').addEventListener('click', function () {
 
             text = document.getElementById("text-ai")
-            
+
             //AQUI TENEMOS QUE HJACER EL CODIGO PARA COGER LA INFORMACION SELECCIONADA DE LA PAGINA
             promptGenerado = generarPromptElaborado();
             console.log(promptGenerado);
@@ -288,7 +290,7 @@
                 const respuestaContenedor = document.getElementById('respuesta');
                 if (response && response.candidates && response.candidates[0].content.parts[0].text) {
                     let respuestaTexto = response.candidates[0].content.parts[0].text.trim(); // Recorta espacios innecesarios
-                    respuestaContenedor.innerHTML = `<code>${respuestaTexto}</code>`; // Mostrar con formato respetando espacios
+                    respuestaContenedor.innerHTML = `${respuestaTexto}`; // Mostrar con formato respetando espacios
                 } else {
                     respuestaContenedor.textContent = "Hubo un error al obtener la respuesta.";
                 }
