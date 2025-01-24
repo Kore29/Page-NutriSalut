@@ -327,6 +327,7 @@
 
             //AQUI TENEMOS QUE HJACER EL CODIGO PARA COGER LA INFORMACION SELECCIONADA DE LA PAGINA
             promptGenerado = generarPromptElaborado();
+
             console.log(promptGenerado);
             // Hacemos la llamada al modelo
             const promptPeticion = {
@@ -338,7 +339,12 @@
             query(promptPeticion).then((response) => {
                 const respuestaContenedor = document.getElementById('respuesta');
                 if (response && response.candidates && response.candidates[0].content.parts[0].text) {
-                    let respuestaTexto = response.candidates[0].content.parts[0].text.trim(); // Recorta espacios innecesarios
+                    let respuestaTexto = response.candidates[0].content.parts[0].text.trim();
+                    
+                    // Recorta espacios innecesarios
+                    respuestaTexto = respuestaTexto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    respuestaTexto = respuestaTexto.replace(/\n/g, '<br>');
+
                     respuestaContenedor.innerHTML = `${respuestaTexto}`; // Mostrar con formato respetando espacios
                 } else {
                     respuestaContenedor.textContent = "Hubo un error al obtener la respuesta.";
