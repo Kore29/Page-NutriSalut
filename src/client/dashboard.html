@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.2" />
+    <title>NutriSalut</title>
+
+    <link href="./assets/styles/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="./assets/img/LogoIcon.ico"
+      type="image/x-icon"
+    />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-white" href="index.html"
+          >NutriSalut</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="services.html">Chat AI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-white" href="dashboard.html"
+                >Administrar AI</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+      <!-- Título -->
+      <div class="text-center mb-4">
+        <h1 class="fw-bold">Administració de Gestions</h1>
+        <p>Gestiona y crea nuevas opciones para tu sistema</p>
+      </div>
+
+      <!-- Formulario -->
+      <div class="card shadow-sm mb-5 border-0">
+        <div class="card-header">
+          <h2 class="h5 mb-0">Captura de Datos para la Opción</h2>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="nom_opcio" class="form-label fw-bold"
+              >Nombre de la Opción</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="nom_opcio"
+              name="nom_opcio"
+              placeholder="Introduce el nombre de la opción"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="tipus_opcio" class="form-label fw-bold"
+              >Tipo de Opción</label
+            >
+            <select class="form-control" id="tipus_opcio" name="tipus_opcio">
+              <option value="radio">Radio</option>
+              <option value="select" selected>Select</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="contigut" class="form-label fw-bold">Opciones</label>
+            <input
+              type="text"
+              class="form-control"
+              id="contigut"
+              name="contigut"
+              placeholder="Introduce las opciones separadas por comas"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcio_opcio" class="form-label fw-bold"
+              >Descripción de la Opción</label
+            >
+            <textarea
+              class="form-control"
+              id="descripcio_opcio"
+              name="descripcio_opcio"
+              placeholder="Introduce la descripción de la opción"
+              rows="2"
+              required
+            ></textarea>
+          </div>
+
+          <button type="button" class="btn px-4" id="create-opcio-btn">
+            Crear Opción
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabla de Opciones -->
+      <div class="card shadow-sm border-0">
+        <div class="card-header">
+          <h2 class="h5 mb-0">Lista de Opciones</h2>
+        </div>
+        <div class="card-body">
+          <table class="tables">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Contenido</th>
+                <th>Descripción</th>
+                <th>Administrar Pregunta</th>
+              </tr>
+            </thead>
+            <tbody id="opciones-list">
+              <!-- Las opciones se agregarán aquí dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <br /><br />
+
+    <script src="./assets/scripts/utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+  </body>
+</html>

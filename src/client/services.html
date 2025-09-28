@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.2" />
+    <title>NutriSalut</title>
+
+    <link href="./assets/styles/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="../assets/img/LogoIcon.ico"
+      type="image/x-icon"
+    />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-white" href="index.html"
+          >NutriSalut</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-white" href="services.html"
+                >Chat AI</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="dashboard.html"
+                >Administrar AI</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="spinner-background">
+      <img id="spinner" src="../assets/img/loading-gif.gif" />
+    </div>
+
+    <div class="container mt-5">
+      <div class="row">
+        <!-- Título principal -->
+        <div class="text-center mb-5">
+          <h1 class="fw-bold">Chatbot Client Example</h1>
+          <p>
+            Interactúa con nuestro sistema para resolver tus dudas y enviar
+            sugerencias.
+          </p>
+        </div>
+        <div class="col-4">
+          <!-- Sección de preguntas -->
+          <div class="card mb-4 shadow-sm" id="questions">
+            <div class="card-header">
+              <h2 class="h5 mb-0">Preguntas</h2>
+            </div>
+            <div class="card-body">
+              <div id="preguntas-list" class="row gy-2">
+                <!-- Aquí se generarán las preguntas dinámicamente -->
+              </div>
+            </div>
+            <div class="card-header">
+              <h2 class="h5 mb-0">
+                Envía más detalles para mejorar tu experiencia (opcional)
+              </h2>
+            </div>
+            <div class="card-body">
+              <textarea
+                id="texto-peticion"
+                class="form-control mb-3 shadow-sm"
+                rows="3"
+                placeholder="Escribe tu sugerencia aquí..."
+              ></textarea>
+              <div class="text-end mt-4">
+                <button class="btn px-4 shadow-sm" id="enviarPeticion">
+                  Enviar Respuestas
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <!-- Contenedor de la respuesta -->
+          <div class="chat-respuestas card mb-4 shadow-sm">
+            <div
+              class="card-header text-center"
+              id="hst"
+              style="border-radius: 0px; padding: 5px"
+            >
+              <h5>Chat de la AI</h5>
+            </div>
+            <pre class="card-body text-justify-pre" id="respuesta">
+                        <!-- Aquí se mostrará la respuesta -->
+                    </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script principal -->
+    <script>
+      function mostrarSpinner() {
+        document.getElementById("spinner").style.display = "flex";
+        document.body.classList.add("no-scroll");
+      }
+
+      function ocultarSpinner() {
+        document.getElementById("spinner").style.display = "none";
+        document.body.classList.remove("no-scroll");
+      }
+
+      function getAllPreguntas() {
+        fetch("http://localhost:3000/preguntas")
+          .then((response) => {
+            if (response.ok) return response.json();
+            else throw new Error("Error en la solicitud: " + response.status);
+          })
+          .then((data) => {
+            const preguntasList = document.getElementById("preguntas-list");
+            preguntasList.innerHTML = "";
+            data.forEach((pregunta) => {
+              const opciones = pregunta.contigut.split(", ");
+              let inputHTML = "";
+
+              if (pregunta.tipus_opcio === "radio") {
+                inputHTML = opciones
+                  .map(
+                    (opcion, index) => `
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="${
+                                      pregunta.nom_opcio
+                                    }" value="${opcion}" id="${
+                      pregunta.nom_opcio
+                    }-${opcion}" ${index === 0 ? "checked" : ""}>
+                                    <label class="form-check-label" for="${
+                                      pregunta.nom_opcio
+                                    }-${opcion}">${opcion}</label>
+                                </div>
+                            `
+                  )
+                  .join("");
+              } else if (pregunta.tipus_opcio === "select") {
+                inputHTML = `
+                                <select class="form-select" name="${
+                                  pregunta.nom_opcio
+                                }">
+                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    ${opciones
+                                      .map(
+                                        (opcion) =>
+                                          `<option value="${opcion}">${opcion}</option>`
+                                      )
+                                      .join("")}
+                                </select>
+                            `;
+              }
+
+              const questionHTML = `
+                            <div class="col-12">
+                                <label class="form-label fw-bold">${pregunta.nom_opcio}</label>
+                                ${inputHTML}
+                                <small>${pregunta.descripcio_opcio}</small>
+                            </div>
+                        `;
+              preguntasList.innerHTML += questionHTML;
+            });
+          })
+          .catch((error) =>
+            console.error("Error al obtener las preguntas:", error)
+          );
+      }
+
+      const API_URL =
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDyHz6VsJBDWVYk8_rSKeuONOGHsgOKkX0";
+      async function query(data) {
+        try {
+          const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify(data),
+          });
+          return await response.json();
+        } catch (error) {
+          console.error("Error al llamar a la IA:", error);
+          return null;
+        }
+      }
+
+      function generarPromptElaborado() {
+        const contenedor = document.getElementById("preguntas-list");
+        const inputs = contenedor.querySelectorAll("input, select");
+        const datos = {};
+
+        for (let i = 0; i < inputs.length; i++) {
+          const input = inputs[i];
+          if (input.type === "radio" && input.checked)
+            datos[input.name] = input.value;
+          else if (input.tagName === "SELECT") datos[input.id] = input.value;
+        }
+
+        datos.texto_personalizado =
+          document.getElementById("texto-peticion").value;
+
+        let prompt = "Quiero hacer un plan de alimentación\n\n";
+        for (const clave in datos) {
+          if (clave !== "texto_personalizado")
+            prompt += `${clave} - ${datos[clave]}\n`;
+        }
+        if (datos.texto_personalizado)
+          prompt += `\nAdemás, me gustaría destacar lo siguiente: ${datos.texto_personalizado} y no pongas una tabla, que sea entendible`;
+        prompt += "\n¿Podrías hacerme este plan?";
+        return prompt;
+      }
+
+      document
+        .getElementById("enviarPeticion")
+        .addEventListener("click", function () {
+          mostrarSpinner();
+          const promptGenerado = generarPromptElaborado();
+
+          const promptPeticion = {
+            contents: [{ parts: [{ text: promptGenerado }] }],
+          };
+
+          query(promptPeticion)
+            .then((response) => {
+              const respuestaContenedor = document.getElementById("respuesta");
+              if (
+                response &&
+                response.candidates &&
+                response.candidates[0].content.parts[0].text
+              ) {
+                let respuestaTexto =
+                  response.candidates[0].content.parts[0].text.trim();
+                respuestaTexto = respuestaTexto
+                  .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                  .replace(/\n/g, "<br>");
+                respuestaContenedor.innerHTML = `${respuestaTexto}`;
+              } else {
+                respuestaContenedor.textContent =
+                  "Hubo un error al obtener la respuesta.";
+              }
+            })
+            .catch((error) => {
+              const respuestaContenedor = document.getElementById("respuesta");
+              respuestaContenedor.textContent =
+                "Error al procesar la solicitud: " + error.message;
+              console.error(error);
+            })
+            .finally(() => ocultarSpinner());
+        });
+
+      document.addEventListener("DOMContentLoaded", getAllPreguntas);
+    </script>
+  </body>
+</html>
